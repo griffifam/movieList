@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: 'block';
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  background-color: #121212; /* Dark base */
+  color: #ffffff; /* Light text for contrast */
+  background-image: linear-gradient(
+    to bottom,
+    #121212,
+    #1e1e1e
+  ); /* Optional subtle gradient */
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+#body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}

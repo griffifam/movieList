@@ -1,6 +1,6 @@
 export default {
   singleQuote: true,
-  trailingComma: 'es5',
+  trailingComma: 'es6',
   printWidth: 80,
   jsxBracketSameLine: false,
   bracketSpacing: true,

@@ -1,6 +1,6 @@
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 const baseUrl = import.meta.env.VITE_TMDB_API_URL;
-const apiToken = import.meta.env.VITE_TMDB_API_TOKEN; // This is optional, depending on the endpoint
+const apiToken = import.meta.env.VITE_TMDB_API_TOKEN;
 const accountId = import.meta.env.VITE_TMDB_API_ACCOUNT_ID;
 
 export const fetchFavoriteMovies = async () => {
@@ -15,12 +15,12 @@ export const fetchFavoriteMovies = async () => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${apiToken}`, // This is not always necessary, but can be used for some endpoints
+      Authorization: `Bearer ${apiToken}`,
     },
   });
 
   if (!res.ok) {
-    const errorText = await res.text(); // helpful for debugging
+    const errorText = await res.text();
     throw new Error(
       `Failed to fetch favorite movies: ${res.status} ${errorText}`
     );
