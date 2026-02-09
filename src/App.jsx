@@ -2,10 +2,13 @@ import Box from '@mui/material/Box';
 import { Route, Routes } from 'react-router-dom';
 import AuthCallback from '../auth/AuthCallback.jsx';
 import ProtectedRoute from '../auth/ProtectedRoute.jsx';
+import FilmPage from '../pages/FilmPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import LoginPage from '../pages/LoginPage.jsx';
+import ProfilePage from '../pages/ProfilePage.jsx';
 
 function App() {
+
   return (
     <Box
       sx={{
@@ -25,6 +28,22 @@ function App() {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/film/:id"
+          element={
+            <ProtectedRoute>
+              <FilmPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />

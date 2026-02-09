@@ -1,18 +1,24 @@
 import { Box } from '@mui/material';
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { FilmCard } from '../organisms/FilmCard.jsx';
 import addRemoveFavorite from "../tmdb/addRemoveFavorite.jsx";
 
 export const SelectActionCard = ({ films }) => {
-  const [selectedCard, setSelectedCard] = useState(0);
+  const queryClient = useQueryClient();
   const hasFavorites = films.some((film) => film.isFavorite);
   const initialFavorites = hasFavorites
     ? films.filter((film) => film.isFavorite).map((film) => film.id)
     : [];
   const [favoriteFilmIds, setFavoriteFilmIds] = useState(initialFavorites);
   const [favoriteMovies, setFavoriteMovies] = useState(films);
+
+  useEffect(() => {
+    setFavoriteMovies(films);
+    const newFavorites = films.filter((film) => film.isFavorite).map((film) => film.id);
+    setFavoriteFilmIds(newFavorites);
+  }, [films]);
   
   const { mutate: toggleFavorite, isPending } = useMutation({
     mutationFn: ({ filmId, favorite }) => addRemoveFavorite(filmId, favorite),
@@ -24,6 +30,10 @@ export const SelectActionCard = ({ films }) => {
         )
       );
       return { prev: favoriteMovies };
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['favoriteList'] });
     },
 
     onError: (_err, _vars, ctx) => {
@@ -50,14 +60,10 @@ export const SelectActionCard = ({ films }) => {
     >
       {favoriteMovies.map((film, index) => (
         <FilmCard
-          key={`${film.id} - ${index}`}
-          id={film.id}
+          key={`${film.id}-${index}`}
           film={film}
-          index={index}
           defaultFavorite={favoriteFilmIds.includes(film.id)}
           handleFavorite={handleFavorite}
-          selected={selectedCard === index}
-          onClick={() => setSelectedCard(index)}
         />
       ))}
     </Box>

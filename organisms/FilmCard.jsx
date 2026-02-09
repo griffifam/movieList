@@ -1,6 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box, Card, CardContent, CardMedia, IconButton } from "@mui/material";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const FilmCard = ({
   film,
@@ -8,10 +9,18 @@ export const FilmCard = ({
   handleFavorite
 }) => {
   const [isFavorite, setIsFavorite] = useState(defaultFavorite);
+  const navigate = useNavigate();
 
-  const toggleFavorite = () => {
-    handleFavorite(film.id, false);
-    setIsFavorite((prev) => !prev);
+  // Sync local state with prop changes
+  useEffect(() => {
+    setIsFavorite(defaultFavorite);
+  }, [defaultFavorite]);
+
+  const toggleFavorite = (e) => {
+    e.stopPropagation();
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
+    handleFavorite(film.id);
   };
 
   const formatDate = (date) => {
@@ -24,10 +33,11 @@ export const FilmCard = ({
   return (
     <Card
       variant="outlined"
+      onClick={() => navigate(`/film/${film.id}`)}
       sx={{
         transition: "all 0.3s ease-in-out",
         "&:hover, &:focus-within": {
-          backgroundColor: "rgba(227, 212, 212, 0.9)",
+          backgroundColor: "rgba(18, 1, 1, 0.9)",
           boxShadow: "0 8px 20px rgba(255, 0, 0, 0.4), 0 0 10px rgba(255, 0, 0, 0.3)",
           zIndex: 2,
           transform: "scale(1.02)",
@@ -39,6 +49,7 @@ export const FilmCard = ({
         borderRadius: "8px",
         aspectRatio: "2/3",
         overflow: "hidden",
+        cursor: "pointer",
       }}
     >
       <IconButton

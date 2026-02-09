@@ -1,7 +1,6 @@
 import PersonIcon from '@mui/icons-material/Person';
 import { Box, Button, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import InputField from '../../molecules/fields/InputField.jsx';
 
 const wrapperStyles = {
@@ -26,8 +25,6 @@ const formStyles = {
 };
 
 const AuthorizationForm = ({ control, handleSubmit }) => {
-  const navigate = useNavigate();
-
   return (
     <Box sx={wrapperStyles}>
       <form onSubmit={handleSubmit}>
@@ -81,7 +78,6 @@ const AuthorizationForm = ({ control, handleSubmit }) => {
           >
             <Button
               type="submit"
-              onClick={() => navigate('/home')}
               sx={{
                 width: '200px',
                 backgroundColor: 'black',

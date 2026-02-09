@@ -1,6 +1,6 @@
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 const baseUrl = import.meta.env.VITE_TMDB_API_URL;
-const apiToken = import.meta.env.VITE_TMDB_API_TOKEN; // This is optional, depending on the endpoint
+const apiToken = import.meta.env.VITE_TMDB_API_TOKEN;
 const accountId = import.meta.env.VITE_TMDB_API_ACCOUNT_ID;
 
 export const addRemoveFavorite = async (filmId, newFavStatus) => {
@@ -9,7 +9,7 @@ export const addRemoveFavorite = async (filmId, newFavStatus) => {
     throw new Error('No session_id found in localStorage');
   }
 
-  const url = `${baseUrl}account/${accountId}/favorite?language=en-US&sort_by=created_at.asc&session_id=${sessionId}`;
+  const url = `${baseUrl}account/${accountId}/favorite?session_id=${sessionId}`;
 
   const res = await fetch(url, {
     method: 'POST',
@@ -28,13 +28,14 @@ export const addRemoveFavorite = async (filmId, newFavStatus) => {
   if (!res.ok) {
     const errorText = await res.text();
     throw new Error(
-      `Failed to fetch favorite movies: ${res.status} ${errorText}`
+      `Failed to ${newFavStatus ? 'add' : 'remove'} favorite: ${res.status} ${errorText}`
     );
   }
 
   const data = await res.json();
   console.log(data, "data");
-  return data.results;
+  // POST /account/{account_id}/favorite returns { success: boolean, status_code: number, status_message: string }
+  return data;
 };
 
 export default addRemoveFavorite;

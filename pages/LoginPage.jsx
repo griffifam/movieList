@@ -7,7 +7,7 @@ import { createRequestToken } from '../tmdb/createRequestToken.jsx';
 import HomePage from './HomePage.jsx';
 
 const LoginPage = () => {
-  const { login, logout, userData } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const correctUsername = 'movie';
   const correctPassword = 'pass';
